@@ -1,0 +1,70 @@
+﻿@model Schadensapp.Models.DienstleisterView
+
+@{
+    ViewData["Title"] = "Erstellen";
+}
+
+<h1>Erstellen</h1>
+
+<h4>Dienstleister</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Firmenname" class="control-label">Name</label>
+                <input asp-for="Firmenname" class="form-control" />
+                <span asp-validation-for="Firmenname" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Abteilung" class="control-label">Abteilung</label>
+                <input asp-for="Abteilung" class="form-control" />
+                <span asp-validation-for="Abteilung" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Strasse" class="control-label">Straße</label>
+                <input asp-for="Strasse" class="form-control" />
+                <span asp-validation-for="Strasse" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Hausnummer" class="control-label">Hausnummer</label>
+                <input asp-for="Hausnummer" class="form-control" />
+                <span asp-validation-for="Hausnummer" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Postleitzahl" class="control-label">Postleitzahl</label>
+                <input asp-for="Postleitzahl" class="form-control" />
+                <span asp-validation-for="Postleitzahl" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Stadt" class="control-label">Stadt</label>
+                <input asp-for="Stadt" class="form-control" />
+                <span asp-validation-for="Stadt" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="EMail" class="control-label">E-Mail</label>
+                <input asp-for="EMail" class="form-control" />
+                <span asp-validation-for="EMail" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Erstellen" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a asp-action="Index">Zurück zur Liste</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

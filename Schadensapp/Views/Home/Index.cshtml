@@ -1,0 +1,114 @@
+﻿@model Schadensapp.Models.MeldungsViewIndexList
+
+@{
+    ViewData["Title"] = "Eingereichte Meldungen";
+}
+
+<h1>Eingereichte Meldungen</h1>
+<br />
+<form asp-action="Index">
+    <div class="row">
+        <div class="col-sm-3">
+            Filter: <input type="text" value="@Model.Filter" name="SearchString" method="get" />
+        </div>
+        @if (Model.LiegenschaftenListe != null && Model.LiegenschaftenListe.Count >= 1)
+        {
+            <div class="col-sm-5">
+
+                <select asp-for="LiegenschaftenFilter" name="LiegenschaftenSearch" class=" form-control">
+
+                    <option>Liegenschaften-Filter</option>
+
+                    @foreach (var item in Model.LiegenschaftenListe)
+                    {
+                        <option value=@item.LiegenschaftID> @item.Name, @item.Strasse @item.Hausnummer, @item.Postleitzahl, @item.Stadt</option>
+                    }
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <input type="submit" value="Filter" style="background-color: rgba(0,34,102,255); color: #ffffff;" />
+            </div>
+        }
+        else
+        {
+            <div class="col-sm-4">
+                <input type="submit" value="Filter" style="background-color: rgba(0,34,102,255); color: #ffffff;" />
+            </div>
+            <div class="col-sm-5"></div>
+        }
+    </div>
+</form>
+<br />
+<form asp-action="Index">
+    <input type="submit" value="Filter zurücksetzen" style="background-color: rgba(0,34,102,255); color: #ffffff;" />
+</form>
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Eingereicht
+            </th>
+            <th>
+                Raum
+            </th>
+            <th>
+                Gebäudeteil
+            </th>
+            <th>
+                Ebene
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Beschreibung
+            </th>
+            <th>
+                Liegenschaft
+            </th>
+            <th>
+                Adresse
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.MeldungsViewIndex)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatumUhr)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Raum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gebäudeteil)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ebene)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Beschreibung)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LiegenschaftsName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Strasse) @Html.DisplayFor(modelItem => item.Hausnummer), @Html.DisplayFor(modelItem => item.Postleitzahl) @Html.DisplayFor(modelItem => item.Stadt)
+
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.MeldungID">Bearbeiten</a> |
+                    <a asp-action="Details" asp-route-id="@item.MeldungID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.MeldungID">Löschen</a> 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

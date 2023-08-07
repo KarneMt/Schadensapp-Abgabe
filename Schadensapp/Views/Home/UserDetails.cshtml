@@ -1,0 +1,93 @@
+﻿@model Schadensapp.Models.MeldungsView
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Meldung</h4>
+    <hr />
+    <dl class="row">
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meldung.Beschreibung)
+        </dd>
+        <dt class="col-sm-2">
+            Eingereicht am
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meldung.DatumUhr)
+        </dd>
+        <dt class="col-sm-2">
+            Gebäudeteil
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meldung.Gebäudeteil)
+        </dd>
+        <dt class="col-sm-2">
+            Raum
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meldung.Raum)
+        </dd>
+        <dt class="col-sm-2">
+            Ebene
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meldung.Ebene)
+        </dd>
+
+        @if (Model.Liegenschaftslist != null)
+        {
+            @foreach (var item in Model.Liegenschaftslist)
+            {
+                <dt class="col-sm-2">
+                   Liegenschaftsname
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => item.Name)
+                </dd>
+                <dt class="col-sm-2">
+                    Straße
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => item.Strasse)
+                </dd>
+                <dt class="col-sm-2">
+                    Hausnummer
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => item.Hausnummer)
+                </dd>
+                <dt class="col-sm-2">
+                    Postleitzahl
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => item.Postleitzahl)
+                </dd>
+                <dt class="col-sm-2">
+                    Stadt
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => item.Stadt)
+                </dd>
+            }
+        }
+
+        <dt class="col-sm-2">
+            Status
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meldung.Status)
+        </dd>
+        <dt class="col-sm-2">
+            Dringlichkeit
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meldung.Dringlichkeit)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="UserIndex">Zurück zur Liste</a>
+</div>

@@ -1,0 +1,115 @@
+﻿@model Schadensapp.Models.LiegenschaftsViewIndex
+
+@{
+	ViewData["Title"] = "Liegenschaften";
+}
+
+<h1>Liegenschaften</h1>
+
+<p>
+	<a asp-action="Create">Liegenschaft hinzufügen</a>
+</p>
+
+<br />
+<form asp-action="Index">
+	<div class="row">
+		<div class="col-sm-3">
+			Filter: <input type="text" value="@Model.Filter" name="SearchString" method="get" />
+		</div>
+		<div class="col-sm-4">
+			<input type="submit" value="Filter" style="background-color: rgba(0,34,102,255); color: #ffffff;" />
+		</div>
+		<div class="col-sm-5"></div>
+
+	</div>
+</form>
+<br />
+<form asp-action="Index">
+	<input type="submit" value="Filter zurücksetzen" style="background-color: rgba(0,34,102,255); color: #ffffff;" />
+</form>
+<br />
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				Name
+			</th>
+			<th>
+				Aktiviert
+			</th>
+			<th>
+				Straße
+			</th>
+			<th>
+				Hausnummer
+			</th>
+			<th>
+				Postleitzahl
+			</th>
+			<th>
+				Stadt
+			</th>
+			<th>
+				Dienstleister
+			</th>
+			<th>
+				Bearbeitungsstelle
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@if (Model.LiegenschaftsView != null)
+		{
+			@foreach (var item in Model.LiegenschaftsView)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.Name)
+					</td>
+					<td>
+						@if (item.IsActive == true)
+						{
+							<p>Ja</p>
+						}
+						else
+						{
+							<p>Nein</p>
+						}
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Strasse)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Hausnummer)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Postleitzahl)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Stadt)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.DienstleisterFirmenname)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.BearbeitungsstelleName)
+					</td>
+					<td>
+						<a asp-action="Edit" asp-route-id="@item.LiegenschaftID">Bearbeiten</a> |
+						<a asp-action="Details" asp-route-id="@item.LiegenschaftID">Details</a> |
+						@if (item.IsActive == true)
+						{
+							<a asp-action="Deaktivieren" asp-route-id="@item.LiegenschaftID">Deaktivieren</a>
+						}
+						else
+						{
+							<a asp-action="Aktivieren" asp-route-id="@item.LiegenschaftID">Aktivieren</a>
+						}
+					</td>
+				</tr>
+			}
+		}
+	</tbody>
+</table>

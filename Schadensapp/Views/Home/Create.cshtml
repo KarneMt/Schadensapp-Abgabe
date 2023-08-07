@@ -1,0 +1,130 @@
+﻿@model Schadensapp.Models.MeldungsView
+
+@{
+    ViewData["Title"] = "Erstellen";
+}
+
+<h1>Erstellen</h1>
+
+<h4>Meldung</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <dl>
+                <dt class="col-sm-2">
+                    Vorname
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.User.Vorname)
+                </dd>
+                <dt class="col-sm-2">
+                    Nachname
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.User.Nachname)
+                </dd>
+                <dt class="col-sm-2">
+                    Bereich
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.User.Bereich)
+                </dd>
+                <dt class="col-sm-2">
+                    E-Mail
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.User.EMail)
+                </dd>
+                <dt class="col-sm-2">
+                    Telefonnummer
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.User.Telefon)
+                </dd>
+            </dl>
+            <br />
+            Sollte ein Eintrag ihrer persöhnlichen Daten nicht stimmen so ist dieser im MAP zu ändern.
+            <br />
+            <br />
+            <div class="form-group">
+                <label asp-for="Meldung.Raum" class="control-label">Raum</label>
+                <input asp-for="Meldung.Raum" class="form-control" />
+                <span asp-validation-for="Meldung.Raum" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Meldung.Gebäudeteil" class="control-label">Gebäudeteil</label>
+                <input asp-for="Meldung.Gebäudeteil" class="form-control" />
+                <span asp-validation-for="Meldung.Gebäudeteil" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Meldung.Ebene" class="control-label">Ebene</label>
+                <input asp-for="Meldung.Ebene" class="form-control" />
+                <span asp-validation-for="Meldung.Ebene" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Meldung.Dringlichkeit" class="control-label">Dringlichkeit</label>
+                <select asp-for="Meldung.Dringlichkeit" class="form-control">
+                    <option value=Gering>Gering</option>
+                    <option value=Mittel>Mittel</option>
+                    <option value=Hoch>Hoch</option>
+                </select>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Meldung.Beschreibung" class="control-label">Beschreibung</label>
+                <textarea asp-for="Meldung.Beschreibung" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Meldung.Beschreibung" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                @if (Model.Liegenschaftslist != null && Model.Liegenschaftslist.Count >= 1)
+                {
+                    <label asp-for="Meldung.LiegenschaftID" class="control-label">Liegenschaft</label>
+                    <option value=meldung.LiegenschaftID>Name, Straße, Hausnummer, Postleitzahl, Stadt</option>
+                    <select asp-for="Meldung.LiegenschaftID" class="form-control">
+
+                        <option>Liegenschaften-Auswählen</option>
+                        @foreach (var item in Model.Liegenschaftslist)
+                        {
+                            <option value=@item.LiegenschaftID> @item.Name, @item.Strasse, @item.Hausnummer, @item.Postleitzahl, @item.Stadt</option>
+                        }
+
+                    </select>
+                }
+                else
+                {
+                    <p><b>Es existieren keine aktiven Liegenschaften.</b></p>
+                }
+            </div>
+
+
+
+            <br />
+            @if (Model.Liegenschaftslist != null && Model.Liegenschaftslist.Count >= 1)
+            {
+                <div class="form-group">
+                    <input type="submit" value="Meldung erstellen" class="btn btn-primary" />
+                </div>
+            }
+            else
+            {
+                <p><b>Eine Meldung ist nicht möglich, da keine Liegenschaften existieren. Diese sind von ihrer Bearbeitungsstelle zu hinterlegen.</b></p>
+            }
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a asp-action="Index">Zurück zur Liste</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

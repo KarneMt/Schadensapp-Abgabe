@@ -1,0 +1,97 @@
+﻿@model Schadensapp.Models.BearbeitungsstellenViewIndex
+
+@{
+    ViewData["Title"] = "Bearbeitungsstellen";
+}
+
+<h1>Bearbeitungsstellen</h1>
+
+<p>
+    <a asp-action="Create">Bearbeitungsstelle hinzufügen</a>
+</p>
+
+<br />
+<form asp-action="Index">
+    <div class="row">
+        <div class="col-sm-3">
+            Filter: <input type="text" value="@Model.Filter" name="SearchString" method="get" />
+        </div>
+        <div class="col-sm-4">
+            <input type="submit" value="Filter" style="background-color: rgba(0,34,102,255); color: #ffffff;" />
+        </div>
+        <div class="col-sm-5"></div>
+
+    </div>
+</form>
+<br />
+<form asp-action="Index">
+    <input type="submit" value="Filter zurücksetzen" style="background-color: rgba(0,34,102,255); color: #ffffff;" />
+</form>
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Map-Gruppe
+            </th>
+            <th>
+                Telefonnummer
+            </th>
+            <th>
+                E-Mail
+            </th>
+            <th>
+                Aktiviert
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.BearbeitungsstellenView != null)
+        {
+            @foreach (var item in Model.BearbeitungsstellenView)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Bearbeitungsstelle.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Bearbeitungsstelle.MapGruppe)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Bearbeitungsstelle.Telefone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Bearbeitungsstelle.EMail)
+                    </td>
+                    <td>
+                        @if (item.Bearbeitungsstelle.IsActive == true)
+                        {
+                            <p>Ja</p>
+                        }
+                        else
+                        {
+                            <p>Nein</p>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Bearbeitungsstelle.BearbeitungsstelleID">Bearbeiten</a> |
+                        <a asp-action="Details" asp-route-id="@item.Bearbeitungsstelle.BearbeitungsstelleID">Details</a> |
+                        @if (item.Bearbeitungsstelle.IsActive == true)
+                        {
+                            <a asp-action="Deaktivieren" asp-route-id="@item.Bearbeitungsstelle.BearbeitungsstelleID">Deaktivieren</a>
+                        }
+                        else
+                        {
+                            <a asp-action="Aktivieren" asp-route-id="@item.Bearbeitungsstelle.BearbeitungsstelleID">Aktivieren</a>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

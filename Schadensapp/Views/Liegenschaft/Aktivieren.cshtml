@@ -1,0 +1,135 @@
+﻿@model Schadensapp.Models.LiegenschaftsView
+
+@{
+    ViewData["Title"] = "Aktivieren";
+}
+
+<h1>Aktivieren</h1>
+
+<h3>Sind Sie sicher, dass Sie diese Liegenschaft aktivieren möchten?</h3>
+<h2>Nach der Aktivierung kann diese Liegenschaft bei der Erstellung einer Meldung ausgewählt werden.</h2>
+
+<div>
+    <h4>Liegenschaft</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Name
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Straße
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Strasse)
+        </dd>
+        <dt class="col-sm-2">
+            Hausnummer
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Hausnummer)
+        </dd>
+        <dt class="col-sm-2">
+            Postleitzahl
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Postleitzahl)
+        </dd>
+        <dt class="col-sm-2">
+            Stadt
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Stadt)
+        </dd>
+    </dl>
+    <form asp-action="Aktivieren">
+        @if (Model.DienstleisterFirmenname != null)
+        {
+            <dl class="row">
+                <dt class="col-sm-2">
+                    Dienstleister
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.DienstleisterFirmenname)
+                </dd>
+            </dl>
+        }
+        else
+        {
+            <div class="form-group">
+                @if (Model.DienstleistersListe != null && Model.DienstleistersListe.Count >= 1)
+                {
+
+                    <b><label asp-for="DienstleisterID" class="control-label">Dienstleister</label></b>
+                    <p>Firmenname, Abteilung, Straße, Hausnummer, Postleitzahl, Stadt</p>
+                    <select asp-for="DienstleisterID" class="form-control">
+
+                        @foreach (var item in Model.DienstleistersListe)
+                        {
+                            <option value=@item.DienstleisterID>@item.Firmenname, @item.Abteilung, @item.Strasse, @item.Hausnummer, @item.Postleitzahl, @item.Stadt</option>
+                        }
+
+                    </select>
+                }
+                else
+                {
+                    <br />
+                    <p><b>Es existieren keine aktiven Diensteleister.</b></p>
+                }
+            </div>
+        }
+
+        @if (Model.BearbeitungsstelleName != null)
+        {
+            <dl class="row">
+                <dt class="col-sm-2">
+                    Bearbeitungsstelle
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.BearbeitungsstelleName)
+                </dd>
+            </dl>
+        }
+        else
+        {
+            <div class="form-group">
+                @if (Model.BearbeitungsstellenListe != null && Model.BearbeitungsstellenListe.Count >= 1)
+                {
+                    <b><label asp-for="BearbeitungsstelleID" class="control-label">Bearbeitungsstelle</label></b>
+                    <p>Name, E-Mail</p>
+                    <select asp-for="BearbeitungsstelleID" class="form-control">
+
+                        @foreach (var item in Model.BearbeitungsstellenListe)
+                        {
+                            <option value=@item.BearbeitungsstelleID>@item.Name, @item.EMail</option>
+
+                        }
+                    </select>
+                }
+                else
+                {
+                    <br />
+                    <p><b>Es existieren keine aktiven Bearbeitungsstellen.</b></p>
+                }
+            </div>
+        }
+
+        @if (Model.BearbeitungsstellenListe != null && Model.BearbeitungsstellenListe.Count >= 1 && Model.DienstleistersListe != null && Model.DienstleistersListe.Count >= 1 || Model.DienstleisterFirmenname != null && Model.BearbeitungsstelleName != null)
+        {
+            <div class="form-group">
+                <input type="submit" value="Aktivieren" class="btn btn-danger" />
+            </div>
+        }
+        else
+        {
+            <br />
+            <p><b>Eine Aktivierung ist nicht möglich, da benötigte Abhängigkeiten fehlen.</b></p>
+        }
+
+        <input type="hidden" asp-for="LiegenschaftID" />
+
+        <a asp-action="Index">Zurück zur Liste</a>
+    </form>
+</div>

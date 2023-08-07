@@ -1,0 +1,114 @@
+﻿@model Schadensapp.Models.LiegenschaftsView
+@{
+    ViewData["Title"] = "Erstellen";
+}
+
+<h1>Erstellen</h1>
+
+<h4>Liegenschaft</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Name</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Strasse" class="control-label">Straße</label>
+                <input asp-for="Strasse" class="form-control" />
+                <span asp-validation-for="Strasse" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Hausnummer" class="control-label">Hausnummer</label>
+                <input asp-for="Hausnummer" class="form-control" />
+                <span asp-validation-for="Hausnummer" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Postleitzahl" class="control-label">Postleitzahl</label>
+                <input asp-for="Postleitzahl" class="form-control" />
+                <span asp-validation-for="Postleitzahl" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Stadt" class="control-label">Stadt</label>
+                <input asp-for="Stadt" class="form-control" />
+                <span asp-validation-for="Stadt" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-group">
+                @if (Model.DienstleistersListe != null && Model.DienstleistersListe.Count >= 1)
+                {
+                    <label asp-for="DienstleisterID" class="control-label">Dienstleister</label>
+                    <option value=DienstleisterID>Firmenname, Abteilung, Straße, Hausnummer, Postleitzahl, Stadt</option>
+                    <select asp-for="DienstleisterID" class="form-control">
+                        <option>Dienstleister-Auswählen</option>
+
+                        @foreach (var item in Model.DienstleistersListe)
+                        {
+                            <option value=@item.DienstleisterID>@item.Firmenname, @item.Abteilung, @item.Strasse, @item.Hausnummer, @item.Postleitzahl, @item.Stadt</option>
+                        }
+
+
+                    </select>
+                }
+                else
+                {
+                    <p><b>Es existieren keine aktiven Dienstleister.</b></p>
+                }
+            </div>
+
+            <br />
+            <div class="form-group">
+                @if (Model.BearbeitungsstellenListe != null && Model.BearbeitungsstellenListe.Count >= 1)
+                {
+                    <label asp-for="BearbeitungsstelleID" class="control-label">Bearbeitungsstelle</label>
+                    <option value=BearbeitungsstelleID>Name, E-Mail</option>
+                    <select asp-for="BearbeitungsstelleID" class="form-control">
+                        <option>Bearbeitungsstelle-Auswählen</option>
+
+                        @foreach (var item in Model.BearbeitungsstellenListe)
+                        {
+                            <option value=@item.BearbeitungsstelleID>@item.Name, @item.EMail</option>
+                        }
+
+
+                    </select>
+                }
+                else
+                {
+                    <p><b>Es existieren keine aktiven Bearbeitungsstellen.</b></p>
+                }
+            </div>
+
+
+            <br />
+            @if (Model.BearbeitungsstellenListe != null && Model.BearbeitungsstellenListe.Count >= 1 && Model.DienstleistersListe != null && Model.DienstleistersListe.Count >= 1)
+            {
+                <div class="form-group">
+                    <input type="submit" value="Erstellen" class="btn btn-primary" />
+                </div>
+            }
+            else
+            {
+                <p><b>Eine Erstellung ist nicht möglich, da nicht die benötigten Abhängigkeiten zugewiesen werden können.</b></p>
+            }
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a asp-action="Index">Zurück zur Liste</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

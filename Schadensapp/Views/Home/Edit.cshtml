@@ -1,0 +1,178 @@
+﻿@model Schadensapp.Models.MeldungsView
+@{
+    ViewData["Title"] = "Bearbeiten";
+}
+
+<h1>Bearbeiten</h1>
+
+<h4>Meldung</h4>
+<hr />
+<div class="row">
+    <dl class="row">
+        <dt class="col-sm-2">
+            Vorname
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.Vorname) 
+        </dd>
+        <dt class="col-sm-2">
+            Nachname
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.Nachname)
+        </dd>
+        <dt class="col-sm-2">
+            Bereich
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.Bereich)
+        </dd>
+        <dt class="col-sm-2">
+            E-Mail
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.EMail)
+        </dd>
+        <dt class="col-sm-2">
+            Telefonnummer
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.Telefon)
+        </dd>
+        <dt class="col-sm-2">
+            Eingereicht am
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meldung.DatumUhr)
+        </dd>
+        @if (Model.Liegenschaftslist != null && Model.Meldung.LiegenschaftID != null)
+        {
+            @foreach (var item in Model.Liegenschaftslist)
+            {
+                if (item.LiegenschaftID == Model.Meldung.LiegenschaftID)
+                {
+                    <dt class="col-sm-2">
+                        Liegenschaftsname
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => item.Name)
+                    </dd>
+                    <dt class="col-sm-2">
+                        Adresse
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => item.Strasse) @Html.DisplayFor(model => item.Hausnummer), @Html.DisplayFor(model => item.Postleitzahl) @Html.DisplayFor(model => item.Stadt)
+                    </dd>
+                }
+            }
+        }
+    </dl>
+    <div class="col-md-5">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Meldung.BenutzerID" />
+            <input type="hidden" asp-for="Meldung.MeldungID" />
+                        <br />
+            <div class="form-group">
+                @if (Model.Liegenschaftslist != null && Model.Liegenschaftslist.Count >= 1)
+                {
+                    <label asp-for="Meldung.LiegenschaftID" class="control-label">Liegenschaft</label>
+                    <option value=Meldung.LiegenschaftID>Firmenname, Straße, Hausnummer, Postleitzahl, Stadt</option>
+                    <select asp-for="Meldung.LiegenschaftID" class="form-control">
+                        <option>Liegenschaft-Auswählen</option>
+
+                        @foreach (var item in Model.Liegenschaftslist)
+                        {
+                            <option value=@item.LiegenschaftID>@item.Name, @item.Strasse @item.Hausnummer, @item.Postleitzahl @item.Stadt</option>
+                        }
+
+                    </select>
+                }
+                else
+                {
+                    <p><b>Es konnten keine Liegenschaften geladen werden.</b></p>
+                }
+
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Meldung.Raum" class="control-label"></label>
+                <input asp-for="Meldung.Raum" class="form-control" />
+                <span asp-validation-for="Meldung.Raum" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Meldung.Gebäudeteil" class="control-label"></label>
+                <input asp-for="Meldung.Gebäudeteil" class="form-control" />
+                <span asp-validation-for="Meldung.Gebäudeteil" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Meldung.Ebene" class="control-label"></label>
+                <input asp-for="Meldung.Ebene" class="form-control" />
+                <span asp-validation-for="Meldung.Ebene" class="text-danger"></span>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label asp-for="Meldung.Beschreibung" class="control-label"></label>
+                <textarea asp-for="Meldung.Beschreibung" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Meldung.Beschreibung" class="text-danger"></span>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label asp-for="Meldung.Status" class="control-label">Status</label>
+                <select asp-for="Meldung.Status" class="form-control">
+                    <option value=1>In Bearbeitung</option>
+                    <option value=2>Abgelehnt</option>
+                    <option value=3>Auftrag erteilt</option>
+                    <option value=4>Abgeschlossen</option>
+                </select>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Meldung.Dringlichkeit" class="control-label">Dringlichkeit</label>
+                <select asp-for="Meldung.Dringlichkeit" class="form-control">
+                    <option value=Gering>Gering</option>
+                    <option value=Mittel>Mittel</option>
+                    <option value=Hoch>Hoch</option>
+                </select>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Meldung.Anmerkung" class="control-label">Anmerkung</label>
+                <textarea asp-for="Meldung.Anmerkung" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Meldung.Anmerkung" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" name="action" value="Speichern" class="btn btn-primary" />
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" name="action" value="Freigeben" class="btn btn-primary" />
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" name="action" value="Ablehnen" class="btn btn-primary" />
+            </div>
+        </form>
+        <br />
+        <a asp-action="Complete" asp-route-id="@Model.Meldung.MeldungID" class="btn btn-primary">Erledigt</a>
+    </div>
+</div>
+<br />
+<div>
+    <a asp-action="Index">Zurück zur Liste</a>
+</div>
+<br />
+<p><b>Legende</b></p>
+<p>Speichern = Änderungen werden gespeichert.<p>
+<p>Freigeben = Meldung wird an Dienstleister übermittelt und die antragsstellende Person informiert.</p>
+<p>Ablehnen = Meldung wird als "abgelehnt"" gespeichert und die antragsstellende Person informiert.</p>
+<p>Erledigt = Meldung wird als "erledigt" gespeichert und die antragsstellende Person informiert.</p>
+
+        @section Scripts {
+            @{
+                await Html.RenderPartialAsync("_ValidationScriptsPartial");
+            }
+        }
